@@ -4,6 +4,7 @@ build:
     - script:
         code: export NODE_ENV=development
     - npm-install
+    - aussiegeek/install-phantomjs
     - script:
         code: NODE_ENV=production npm run deploy
 
