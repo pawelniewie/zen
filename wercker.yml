@@ -1,0 +1,15 @@
+box: nodesource/node
+build:
+  steps:
+    - script:
+        code: export NODE_ENV=development
+    - npm-install
+    - script:
+        code: NODE_ENV=production npm run deploy
+
+deploy:
+  steps:
+    - ematsen/gh-pages:
+        token: $GITHUB_TOKEN
+        path: dist
+        domain: usezen.it
