@@ -4,6 +4,8 @@ build:
     - script:
         code: export NODE_ENV=development
     - npm-install
+    - wercker/install-packages
+      packages: wget
     - wantedly/install-phantomjs
     - script:
         code: NODE_ENV=production npm run deploy
