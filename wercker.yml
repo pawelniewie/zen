@@ -1,4 +1,4 @@
-box: wernight/phantomjs
+box: cmfatih/phantomjs
 build:
   steps:
     - script:
