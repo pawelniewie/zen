@@ -1,12 +1,9 @@
-box: nodesource/node
+box: wernight/phantomjs
 build:
   steps:
     - script:
         code: export NODE_ENV=development
     - npm-install
-    - wercker/install-packages:
-      packages: wget
-    - taka-h/install-phantomjs
     - script:
         code: NODE_ENV=production npm run deploy
 
