@@ -3,6 +3,8 @@ build:
   steps:
     - script:
         code: export NODE_ENV=development
+    - wercker/install-packages:
+        packages: npm
     - npm-install
     - script:
         code: NODE_ENV=production npm run deploy
