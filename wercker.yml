@@ -6,7 +6,7 @@ build:
     - npm-install
     - wercker/install-packages:
       packages: wget
-    - wantedly/install-phantomjs
+    - taka-h/install-phantomjs
     - script:
         code: NODE_ENV=production npm run deploy
 
