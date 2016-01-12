@@ -1,4 +1,5 @@
-box: akeem/selenium-node-phantomjs
+box: 
+  id: akeem/selenium-node-phantomjs
   entrypoint: /bin/bash -c
 build:
   steps:
