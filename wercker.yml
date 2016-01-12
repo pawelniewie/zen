@@ -1,4 +1,4 @@
-box: cmfatih/phantomjs
+box: akeem/selenium-node-phantomjs
 build:
   steps:
     - script:
