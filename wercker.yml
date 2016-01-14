@@ -1,6 +1,4 @@
-box: 
-  id: 0xf0/node-phantomjs
-  entrypoint: /bin/bash -c
+box: 0xf0/node-phantomjs
 build:
   steps:
     - script:
