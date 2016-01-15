@@ -24,7 +24,7 @@ export class FooterView extends React.Component {
         <div>
           <hr />
           <Link to='/404'>Go to 404 Page</Link><br/>
-          <Link to='/project/TEST'>Go to Test project</Link><br/>
+          <Link to='/projects/TEST'>Go to Test project</Link><br/>
           <Link to='/projects'>Go to projects</Link><br/>
         </div>
     )

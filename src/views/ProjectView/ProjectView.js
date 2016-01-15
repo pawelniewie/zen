@@ -22,20 +22,17 @@ export class ProjectView extends React.Component {
 
   render () {
     return (
-      <div className='container text-center'>
-        <h1>Welcome to Project {this.props.params.projectKey}</h1>
-        <h2>
-          Sample Counter:&nbsp;
-          <span className={styles['counter--green']}>{this.props.counter}</span>
-        </h2>
-        <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
-          Increment
-        </button>
-        <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
+      <div className='container'>
+        <div className="page-header">
+          <h1>
+          <span className="fa-stack">
+            <i className="fa fa-circle fa-stack-2x"></i>
+            <i className="fa fa-rocket fa-stack-1x fa-inverse"></i>
+          </span>
+          {this.props.params.projectKey}
+          </h1>
+        </div>
+
         <FooterView/>
       </div>
     )
