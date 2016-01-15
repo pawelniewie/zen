@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { actions as counterActions } from '../../redux/modules/counter'
-import styles from './HomeView.scss'
+import styles from './ProjectsView.scss'
 import FooterView from 'views/FooterView/FooterView'
 
 // We define mapStateToProps where we'd normally use
@@ -13,7 +13,7 @@ import FooterView from 'views/FooterView/FooterView'
 const mapStateToProps = (state) => ({
   counter: state.counter
 })
-export class HomeView extends React.Component {
+export class ProjectsView extends React.Component {
   static propTypes = {
     counter: React.PropTypes.number.isRequired,
     doubleAsync: React.PropTypes.func.isRequired,
@@ -23,7 +23,7 @@ export class HomeView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
+        <h1>Welcome to Projects View</h1>
         <h2>
           Sample Counter:&nbsp;
           <span className={styles['counter--green']}>{this.props.counter}</span>
@@ -42,4 +42,4 @@ export class HomeView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(HomeView)
+export default connect(mapStateToProps, counterActions)(ProjectsView)
