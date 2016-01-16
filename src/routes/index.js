@@ -10,6 +10,7 @@ import CoreLayout from 'layouts/CoreLayout/CoreLayout'
 import HomeView from 'views/HomeView/HomeView'
 import ProjectsView from 'views/ProjectsView/ProjectsView'
 import ProjectView from 'views/ProjectView/ProjectView'
+import IssueView from 'views/IssueView/IssueView'
 import NotFoundView from 'views/NotFoundView/NotFoundView'
 
 export default (
@@ -17,6 +18,7 @@ export default (
     <IndexRoute component={HomeView} />
     <Route path="/projects" component={ProjectsView}/>
 	<Route path="/projects/:projectKey" component={ProjectView}/>
+	<Route path="/issues/:issueKey" component={IssueView}/>
     <Route path='/404' component={NotFoundView} />
     <Redirect from='*' to='/404' />
   </Route>

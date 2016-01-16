@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { actions as counterActions } from '../../redux/modules/counter'
-import styles from './FooterView.scss'
+import styles from './IssueView.scss'
+import FooterView from 'views/FooterView/FooterView'
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -12,7 +13,7 @@ import styles from './FooterView.scss'
 const mapStateToProps = (state) => ({
   counter: state.counter
 })
-export class FooterView extends React.Component {
+export class IssueView extends React.Component {
   static propTypes = {
     counter: React.PropTypes.number.isRequired,
     doubleAsync: React.PropTypes.func.isRequired,
@@ -21,15 +22,21 @@ export class FooterView extends React.Component {
 
   render () {
     return (
-        <div>
-          <hr />
-          <Link to='/404'>Go to 404 Page</Link><br/>
-          <Link to='/projects/TEST'>Go to Test project</Link><br/>
-          <Link to='/projects'>Go to projects</Link><br/>
-          <Link to='/issues/TEST-1'>Go to TEST-1 issue</Link><br/>
+      <div className='container'>
+        <div className="page-header">
+          <h1>
+          <span className="fa-stack">
+            <i className="fa fa-circle fa-stack-2x"></i>
+            <i className="fa fa-rocket fa-stack-1x fa-inverse"></i>
+          </span>
+          {this.props.params.issueKey}
+          </h1>
         </div>
+
+        <FooterView/>
+      </div>
     )
   }
 }
 
-export default connect(mapStateToProps, counterActions)(FooterView)
+export default connect(mapStateToProps, counterActions)(IssueView)
