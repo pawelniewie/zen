@@ -23,14 +23,36 @@ export class IssueView extends React.Component {
     return (
       <div>
       <h4>Open issues:</h4>
-<ul className='list-group'>
-  <li className='list-group-item'>Add project name</li>
-  <li className='list-group-item'>Add issue icons</li>
-  <li className='list-group-item'>Each issue should be a link to issue view</li>
-  <li className='list-group-item'>On issue list show issue key</li>
-  <li className='list-group-item'>Add recently completed issues</li>
-  <li className='list-group-item'>Show a list of team members in the project</li>
-</ul>
+      <div className="table-responsive">
+<table className='table table-striped'>
+  <tbody>
+    <tr>
+      <th scope="row">TEST-1</th>
+      <td>Add project name</td>
+    </tr>
+    <tr>
+      <th scope="row">TEST-2</th>
+      <td>Add issue icons</td>
+    </tr>
+    <tr>
+      <th scope="row">TEST-3</th>
+      <td>Each issue should be a link to issue view</td>
+    </tr>
+    <tr>
+      <th scope="row">TEST-4</th>
+      <td>On issue list show issue key</td>
+    </tr>
+    <tr>
+      <th scope="row">TEST-5</th>
+      <td>Add recently completed issues</td>
+    </tr>
+    <tr>
+      <th scope="row">TEST-6</th>
+      <td>Show a list of team members in the project</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
       </div>
     )
   }
