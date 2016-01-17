@@ -15,4 +15,5 @@ deploy:
   steps:
     - ematsen/gh-pages:
         token: $GITHUB_TOKEN
+        path: dist
         domain: usezen.it
