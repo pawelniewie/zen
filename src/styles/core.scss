@@ -19,3 +19,14 @@ body {
 *:after {
   box-sizing: inherit;
 }
+
+// https://github.com/css-modules/css-modules
+:global {
+	.page-container {
+		.view-container {
+			.container {
+				width: 100%;
+			}	
+		}
+	}
+}
