@@ -15,9 +15,7 @@ export default class Header extends React.Component {
               <span className='icon-bar'></span>
               <span className='icon-bar'></span>
             </button>
-            <a className='navbar-brand' href='#'>
-              <i className='fa fa-bug'/>
-            </a>
+            <Link className='navbar-brand' to='/'><i className='fa fa-bug'/></Link>
           </div>
 
           <div className='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>

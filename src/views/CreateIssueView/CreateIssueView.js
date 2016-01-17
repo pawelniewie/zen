@@ -27,9 +27,37 @@ export class IssueView extends React.Component {
             <i className='fa fa-circle fa-stack-2x'></i>
             <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
           </span>
-          {this.props.params.issueKey}
+          Create issue
           </h1>
         </div>
+
+        <form className='form-horizontal'>
+          <div className='form-group'>
+            <label for='project' className='col-sm-2 control-label'>Project</label>
+            <div className='col-sm-10'>
+              <select className='form-control' id='project'>
+                <option>Test</option>
+              </select>
+            </div>
+          </div>
+          <div className='form-group'>
+            <label for='summary' className='col-sm-2 control-label'>Summary</label>
+            <div className='col-sm-10'>
+              <input type='text' className='form-control' id='summary' placeholder='Summary'/>
+            </div>
+          </div>
+          <div className='form-group'>
+            <label for='description' className='col-sm-2 control-label'>Description</label>
+            <div className='col-sm-10'>
+              <textarea className='form-control' id='description' rows='5' placeholder='Description'/>
+            </div>
+          </div>
+          <div className='form-group'>
+            <div className='col-sm-offset-2 col-sm-10'>
+              <button type='submit' className='btn btn-primary'>Create</button>
+            </div>
+          </div>
+        </form>
       </div>
     )
   }
