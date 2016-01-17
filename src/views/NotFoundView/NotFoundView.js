@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import FooterView from 'views/FooterView/FooterView'
 
 export class NotFoundView extends React.Component {

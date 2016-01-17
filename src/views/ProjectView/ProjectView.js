@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { actions as counterActions } from '../../redux/modules/counter'
-import styles from './ProjectView.scss'
+// import styles from './ProjectView.scss'
 import FooterView from 'views/FooterView/FooterView'
 import IssuesListView from 'views/IssuesListView/IssuesListView'
 
@@ -16,19 +15,19 @@ const mapStateToProps = (state) => ({
 })
 export class ProjectView extends React.Component {
   static propTypes = {
-    counter: React.PropTypes.number.isRequired,
-    doubleAsync: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired
+    params: React.PropTypes.shape({
+      projectKey: React.PropTypes.string.isRequired
+    })
   };
 
   render () {
     return (
       <div className='container'>
-        <div className="page-header">
+        <div className='page-header'>
           <h1>
-          <span className="fa-stack">
-            <i className="fa fa-circle fa-stack-2x"></i>
-            <i className="fa fa-rocket fa-stack-1x fa-inverse"></i>
+          <span className='fa-stack'>
+            <i className='fa fa-circle fa-stack-2x'></i>
+            <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
           </span>
           {this.props.params.projectKey}
           </h1>
