@@ -14,7 +14,7 @@ deploy:
     - script:
         code: ls -la
     - script:
-        code: ls -la dist
+        code: ls -la build
     - ematsen/gh-pages:
         token: $GITHUB_TOKEN
         path: dist
