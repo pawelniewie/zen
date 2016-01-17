@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { actions as counterActions } from '../../redux/modules/counter'
 import styles from './ProjectsView.scss'
-import FooterView from 'views/FooterView/FooterView'
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -35,7 +34,6 @@ export class ProjectsView extends React.Component {
                 onClick={this.props.doubleAsync}>
           Double (Async)
         </button>
-        <FooterView/>
       </div>
     )
   }

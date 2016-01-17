@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { actions as counterActions } from '../../redux/modules/counter'
 // import styles from './ProjectView.scss'
-import FooterView from 'views/FooterView/FooterView'
 import IssuesListView from 'views/IssuesListView/IssuesListView'
 
 // We define mapStateToProps where we'd normally use
@@ -34,8 +33,6 @@ export class ProjectView extends React.Component {
         </div>
 
         <IssuesListView/>
-
-        <FooterView/>
       </div>
     )
   }

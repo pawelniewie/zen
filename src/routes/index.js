@@ -12,12 +12,14 @@ import ProjectsView from 'views/ProjectsView/ProjectsView'
 import ProjectView from 'views/ProjectView/ProjectView'
 import IssueView from 'views/IssueView/IssueView'
 import NotFoundView from 'views/NotFoundView/NotFoundView'
+import CreateIssueView from 'views/CreateIssueView/CreateIssueView'
 
 export default (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/projects' component={ProjectsView}/>
 	<Route path='/projects/:projectKey' component={ProjectView}/>
+	<Route path='/issues/new' component={CreateIssueView}/>
 	<Route path='/issues/:issueKey' component={IssueView}/>
     <Route path='/404' component={NotFoundView} />
     <Redirect from='*' to='/404' />

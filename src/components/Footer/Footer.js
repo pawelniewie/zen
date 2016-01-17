@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 // import { actions as counterActions } from '../../redux/modules/counter'
-// import styles from './FooterView.scss'
+// import styles from './Footer.scss'
 
-export default class FooterView extends React.Component {
+export default class Footer extends React.Component {
   render () {
     return (
         <div>

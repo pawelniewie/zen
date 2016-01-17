@@ -23,31 +23,31 @@ export class IssueView extends React.Component {
     return (
       <div>
       <h4>Open issues:</h4>
-      <div className="table-responsive">
+      <div className='table-responsive'>
 <table className='table table-striped'>
   <tbody>
     <tr>
-      <th scope="row">TEST-1</th>
+      <th scope='row'>TEST-1</th>
       <td>Add project name</td>
     </tr>
     <tr>
-      <th scope="row">TEST-2</th>
+      <th scope='row'>TEST-2</th>
       <td>Add issue icons</td>
     </tr>
     <tr>
-      <th scope="row">TEST-3</th>
+      <th scope='row'>TEST-3</th>
       <td>Each issue should be a link to issue view</td>
     </tr>
     <tr>
-      <th scope="row">TEST-4</th>
+      <th scope='row'>TEST-4</th>
       <td>On issue list show issue key</td>
     </tr>
     <tr>
-      <th scope="row">TEST-5</th>
+      <th scope='row'>TEST-5</th>
       <td>Add recently completed issues</td>
     </tr>
     <tr>
-      <th scope="row">TEST-6</th>
+      <th scope='row'>TEST-6</th>
       <td>Show a list of team members in the project</td>
     </tr>
   </tbody>
