@@ -8,10 +8,11 @@ build:
     - npm-install
     - script:
         code: NODE_ENV=production npm run deploy
+    - script:
+        code: cp -R dist "$WERCKER_OUTPUT_DIR"
 
 deploy:
   steps:
     - ematsen/gh-pages:
         token: $GITHUB_TOKEN
-        path: dist
         domain: usezen.it
