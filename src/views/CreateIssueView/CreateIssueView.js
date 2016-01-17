@@ -33,7 +33,7 @@ export class IssueView extends React.Component {
 
         <form className='form-horizontal'>
           <div className='form-group'>
-            <label for='project' className='col-sm-2 control-label'>Project</label>
+            <label htmlFor='project' className='col-sm-2 control-label'>Project</label>
             <div className='col-sm-10'>
               <select className='form-control' id='project'>
                 <option>Test</option>
@@ -41,13 +41,13 @@ export class IssueView extends React.Component {
             </div>
           </div>
           <div className='form-group'>
-            <label for='summary' className='col-sm-2 control-label'>Summary</label>
+            <label htmlFor='summary' className='col-sm-2 control-label'>Summary</label>
             <div className='col-sm-10'>
               <input type='text' className='form-control' id='summary' placeholder='Summary'/>
             </div>
           </div>
           <div className='form-group'>
-            <label for='description' className='col-sm-2 control-label'>Description</label>
+            <label htmlFor='description' className='col-sm-2 control-label'>Description</label>
             <div className='col-sm-10'>
               <textarea className='form-control' id='description' rows='5' placeholder='Description'/>
             </div>
