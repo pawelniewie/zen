@@ -1,8 +1,13 @@
-import { methods, POUCH_DB } from 'redux-pouch'
+import {
+  methods, POUCH_DB
+}
+from 'redux-pouch'
 import db from './db'
 
 export const ADD = 'boxes/ADD'
-export function add({name}) {
+export function add({
+  name
+}) {
   return {
     type: ADD,
     payload: {
