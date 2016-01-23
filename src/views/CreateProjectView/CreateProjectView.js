@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { actions as counterActions } from '../../redux/modules/counter'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
+import { add } from '../../redux/modules/ProjectsActions'
 // import styles from './CreateProjectView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -15,11 +15,11 @@ const mapStateToProps = (state) => ({
 })
 export class CreateProjectView extends React.Component {
   static propTypes = {
+    dispatch: React.PropTypes.func.isRequired
   };
 
- _handleValidSubmit(values) {
-    // Values is an object containing all values
-    // from the inputs
+  _handleValidSubmit(values) {
+    this.props.dispatch(add(values))
   }
 
   _handleInvalidSubmit(errors, values) {
@@ -72,7 +72,7 @@ export class CreateProjectView extends React.Component {
 
           <div className='form-group'>
             <div className='col-sm-offset-2 col-sm-4'>
-              <Button bsStyle="primary" type="submit">Create</Button>
+              <Button bsStyle='primary' type='submit'>Create</Button>
             </div>
           </div>
         </Form>
@@ -81,4 +81,4 @@ export class CreateProjectView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(CreateProjectView)
+export default connect(mapStateToProps)(CreateProjectView)
