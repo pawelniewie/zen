@@ -1,6 +1,7 @@
 import { methods, POUCH_DB, FEED_CHANGE, pouchify } from 'redux-pouch'
 import { db, name as dbName } from './db'
 import { createAction } from 'redux-actions'
+import { routeActions } from 'redux-simple-router'
 
 export const ADD = 'projects/ADD'
 export const add = createAction(ADD, () => ({
@@ -47,22 +48,22 @@ export function projectsReducer(state = [], action) {
           }]
         case NEXT:
           // TODO sorting
-          const rest = state.filter(box => box.seqId !== action.sequence.id)
-          let nextBox = {
-            ...state.find(box => box.seqId === action.sequence.id),
+          const rest = state.filter(project => project.seqId !== action.sequence.id)
+          let nextProject = {
+            ...state.find(project => project.seqId === action.sequence.id),
               isSyncing: false
           }
 
           if (action.error) {
-            nextBox.error = action.payload
+            nextProject.error = action.payload
           } else {
-            nextBox = {
-              ...nextBox,
+            nextProject = {
+              ...nextProject,
               ...action.payload
             }
           }
 
-          return [...rest, nextBox]
+          return [...rest, nextProject]
       }
 
     case CLEAR:
@@ -81,15 +82,15 @@ export function projectsReducer(state = [], action) {
       const changeBox = action.payload.change.doc
         // TODO name comparison is a bit like cheating here but it illustrates the point
         // This has to be worked out in more depth anyway
-      const rest = state.filter(box => box.name !== changeBox.name)
-      const nextBox = state.find(box => box.name === changeBox.name)
+      const rest = state.filter(project => project.name !== changeBox.name)
+      const nextProject = state.find(project => project.name === changeBox.name)
 
       if (changeBox._deleted) {
         return rest
       } else {
-        return typeof nextBox === 'undefined' ?
+        return typeof nextProject === 'undefined' ?
           [...state, changeBox] :
-          (typeof nextBox.seqId === 'undefined' ?
+          (typeof nextProject.seqId === 'undefined' ?
             [...rest, changeBox] :
             state)
       }

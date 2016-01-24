@@ -6,5 +6,5 @@ import projectsReducer from './modules/ProjectsActions'
 export default combineReducers({
   counter,
   router,
-  projectsReducer
+  projects: projectsReducer
 })

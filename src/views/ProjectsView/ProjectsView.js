@@ -1,7 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { actions as counterActions } from '../../redux/modules/counter'
 import styles from './ProjectsView.scss'
+import { fetchAll } from '../../redux/modules/ProjectsActions'
+import { Label } from 'react-bootstrap'
+
+function getColour(isSyncing, error) {
+  return isSyncing ? 'yellow' : (error ? 'red' : 'green');
+}
+
+const Project = props => (
+  <div style={{color: getColour(props.isSyncing, props.error)}}>
+    {props.project.name} <Label bsStyle="primary">{props.project.key}</Label>
+  </div>
+);
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -9,14 +20,16 @@ import styles from './ProjectsView.scss'
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  projects: state.projects
 })
 export class ProjectsView extends React.Component {
   static propTypes = {
-    counter: React.PropTypes.number.isRequired,
-    doubleAsync: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired
+    dispatch: React.PropTypes.func.isRequired
   };
+
+  componentDidMount() {
+    this.props.dispatch(fetchAll());
+  }
 
   render () {
     return (
@@ -26,17 +39,13 @@ export class ProjectsView extends React.Component {
           Sample Counter:&nbsp;
           <span className={styles['counter--green']}>{this.props.counter}</span>
         </h2>
-        <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
-          Increment
-        </button>
-        <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
+        <div>
+          {this.props.projects.map((project, i) => <Project key={project._id} project={project} />)}
+        </div>
+
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, counterActions)(ProjectsView)
+export default connect(mapStateToProps)(ProjectsView)
