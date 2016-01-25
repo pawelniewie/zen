@@ -4,15 +4,29 @@ import styles from './ProjectsView.scss'
 import { fetchAll } from '../../redux/modules/ProjectsActions'
 import { Label } from 'react-bootstrap'
 
-function getColour(isSyncing, error) {
-  return isSyncing ? 'yellow' : (error ? 'red' : 'green');
+function getColour (isSyncing, error) {
+  return isSyncing ? 'yellow' : (error ? 'red' : 'green')
 }
 
-const Project = props => (
-  <div style={{color: getColour(props.isSyncing, props.error)}}>
-    {props.project.name} <Label bsStyle="primary">{props.project.key}</Label>
-  </div>
-);
+class Project extends React.Component {
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired,
+    project: React.PropTypes.shape({
+      name: React.PropTypes.string.isRequired,
+      key: React.PropTypes.string.isRequired
+    }),
+    isSyncing: React.PropTypes.boolean,
+    error: React.PropTypes.any
+  };
+
+  render () {
+    return (
+      <div style={{color: getColour(this.props.isSyncing, this.props.error)}}>
+        {this.props.project.name} <Label bsStyle='primary'>{this.props.project.key}</Label>
+      </div>
+    )
+  }
+}
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -24,11 +38,18 @@ const mapStateToProps = (state) => ({
 })
 export class ProjectsView extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired
+    dispatch: React.PropTypes.func.isRequired,
+    projects: React.PropTypes.arrayOf(React.PropTypes.shape({
+      name: React.PropTypes.string.isRequired,
+      key: React.PropTypes.string.isRequired
+    })),
+    counter: React.PropTypes.number.isRequired,
+    doubleAsync: React.PropTypes.func.isRequired,
+    increment: React.PropTypes.func.isRequired
   };
 
-  componentDidMount() {
-    this.props.dispatch(fetchAll());
+  componentDidMount () {
+    this.props.dispatch(fetchAll())
   }
 
   render () {

@@ -1,7 +1,7 @@
 import { methods, POUCH_DB, FEED_CHANGE, pouchify } from 'redux-pouch'
 import { db, name as dbName } from './db'
 import { createAction } from 'redux-actions'
-import { routeActions } from 'redux-simple-router'
+// import { routeActions} from 'redux-simple-router'
 
 export const ADD = 'projects/ADD'
 export const add = createAction(ADD, () => ({
@@ -36,22 +36,22 @@ export const actions = {
 const NEXT = 'next'
 const START = 'start'
 
-export function projectsReducer(state = [], action) {
+export function projectsReducer (state = [], action) {
   switch (action.type) {
     case ADD:
       switch (action.sequence.type) {
         case START:
           return [...state, {
             ...action.meta,
-              seqId: action.sequence.id,
-              isSyncing: true
+            seqId: action.sequence.id,
+            isSyncing: true
           }]
         case NEXT:
           // TODO sorting
           const rest = state.filter(project => project.seqId !== action.sequence.id)
           let nextProject = {
             ...state.find(project => project.seqId === action.sequence.id),
-              isSyncing: false
+            isSyncing: false
           }
 
           if (action.error) {
@@ -65,6 +65,7 @@ export function projectsReducer(state = [], action) {
 
           return [...rest, nextProject]
       }
+      break
 
     case CLEAR:
       return action.sequence.type === NEXT && !action.error ? [] : state
@@ -76,6 +77,7 @@ export function projectsReducer(state = [], action) {
         case NEXT:
           return action.payload
       }
+      break
 
       // TODO @sven? :)
     case FEED_CHANGE:
@@ -88,12 +90,12 @@ export function projectsReducer(state = [], action) {
       if (changeBox._deleted) {
         return rest
       } else {
-        return typeof nextProject === 'undefined' ?
-          [...state, changeBox] :
-          (typeof nextProject.seqId === 'undefined' ?
-            [...rest, changeBox] :
-            state)
+        return typeof nextProject === 'undefined'
+          ? [...state, changeBox]
+          : (typeof nextProject.seqId === 'undefined'
+              ? [...rest, changeBox] : state)
       }
+      break
 
     default:
       return state

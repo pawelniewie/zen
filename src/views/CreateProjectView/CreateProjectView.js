@@ -18,11 +18,11 @@ export class CreateProjectView extends React.Component {
     dispatch: React.PropTypes.func.isRequired
   };
 
-  _handleValidSubmit(values) {
+  _handleValidSubmit (values) {
     this.props.dispatch(add(values))
   }
 
-  _handleInvalidSubmit(errors, values) {
+  _handleInvalidSubmit (errors, values) {
     // Errors is an array containing input names
     // that failed to validate
   }
@@ -41,7 +41,7 @@ export class CreateProjectView extends React.Component {
         </div>
 
         <Form className='form-horizontal' onValidSubmit={this._handleValidSubmit.bind(this)} onInvalidSubmit={this._handleInvalidSubmit.bind(this)}>
-          <ValidatedInput 
+          <ValidatedInput
             type='text'
             label='Name'
             labelClassName='col-sm-2'
@@ -51,8 +51,8 @@ export class CreateProjectView extends React.Component {
             errorHelp={{
               required: 'Please enter project name'
             }}/>
-          
-          <ValidatedInput 
+
+          <ValidatedInput
             type='text'
             label='Key'
             labelClassName='col-sm-2'
