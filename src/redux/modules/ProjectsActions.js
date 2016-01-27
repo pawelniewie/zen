@@ -36,7 +36,7 @@ export const actions = {
 const NEXT = 'next'
 const START = 'start'
 
-export function projectsReducer (state = [], action) {
+export function projectsReducer (state = { all: [] }, action) {
   switch (action.type) {
     case ADD:
       switch (action.sequence.type) {
@@ -75,7 +75,7 @@ export function projectsReducer (state = [], action) {
         case START:
           return state
         case NEXT:
-          return action.payload
+          return { all: action.payload }
       }
       break
 
