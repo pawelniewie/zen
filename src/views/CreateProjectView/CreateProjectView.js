@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
 import { add } from '../../redux/modules/ProjectsActions'
-import { pushPath } from 'redux-simple-router'
+import { routeActions } from 'react-router-redux'
 // import styles from './CreateProjectView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -23,7 +23,7 @@ export class CreateProjectView extends React.Component {
     const dispatch = this.props.dispatch
 
     this.props.dispatch(add(values))
-      .then(() => dispatch(pushPath('/projects/' + values.key)))
+      .then(() => dispatch(routeActions.push('/projects/' + values.key)))
   }
 
   _handleInvalidSubmit (errors, values) {

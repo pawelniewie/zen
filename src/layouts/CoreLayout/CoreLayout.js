@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import '../../styles/core.scss'
 import Footer from 'components/Footer/Footer'
 import Header from 'components/Header/Header'
@@ -10,7 +10,7 @@ import Header from 'components/Header/Header'
 // leverage React's new Stateless Functions:
 // https://facebook.github.io/react/docs/reusable-components.html#stateless-functions
 //
-// CoreLayout is a pure function of it's props, so we can
+// CoreLayout is a pure function of its props, so we can
 // define it with a plain javascript function...
 function CoreLayout ({ children }) {
   return (
@@ -25,7 +25,7 @@ function CoreLayout ({ children }) {
 }
 
 CoreLayout.propTypes = {
-  children: React.PropTypes.element
+  children: PropTypes.element
 }
 
 export default CoreLayout

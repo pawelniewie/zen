@@ -7,9 +7,6 @@ React Redux Starter Kit
 [![devDependency Status](https://david-dm.org/davezuko/react-redux-starter-kit/dev-status.svg)](https://david-dm.org/davezuko/react-redux-starter-kit#info=devDependencies)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-> ### This Project Recently Upgraded to Babel 6!
-> Woohoo! If you'd like to try it out, you're welcome to build directly from the master branch. However, if troubleshooting issues with Babel isn't quite your thing, just pull the [stable v0.18.0 release](https://github.com/davezuko/react-redux-starter-kit/tree/v0.18.0) and continue on your way with Babel 5.
-
 > ### Want Semicolons?
 > After installing npm dependencies, open `.eslintrc`, change the `semi` rule from `never` to `always`, and then run `npm run lint:fix` -- Easy as that! Alternatively, use the same npm script after installing and extending your preferred ESLint configuration; it's easy to customize the project's code style to suit your team's needs. See, we can coexist peacefully.
 
@@ -34,7 +31,8 @@ Table of Contents
 Requirements
 ------------
 
-Node `^5.0.0`
+* node `^4.2.0`
+* npm `^3.0.0`
 
 Features
 --------
@@ -46,8 +44,8 @@ Features
   * redux-devtools
     * use `npm run dev:nw` to display them in a separate window.
   * redux-thunk middleware
-* [react-router](https://github.com/rackt/react-router) (`^1.0.0`)
-* [redux-simple-router](https://github.com/rackt/redux-simple-router) (`^1.0.0`)
+* [react-router](https://github.com/rackt/react-router) (`^2.0.0`)
+* [react-router-redux](https://github.com/rackt/react-router-redux) (`^2.0.0`)
 * [Webpack](https://github.com/webpack/webpack)
   * [CSS modules!](https://github.com/css-modules/css-modules)
   * sass-loader
@@ -55,7 +53,7 @@ Features
   * Bundle splitting for app and vendor dependencies
   * CSS extraction during builts that are not using HMR (like `npm run compile`)
   * Loaders for fonts and images
-* [Koa](https://github.com/koajs/koa) (`^1.0.0`)
+* [Koa](https://github.com/koajs/koa) (`^2.0.0-alpha`)
   * webpack-dev-middleware
   * webpack-hot-middleware
 * [Karma](https://github.com/karma-runner/karma)
@@ -119,7 +117,7 @@ Common configuration options:
 * `server_host` - hostname for the Koa server
 * `server_port` - port for the Koa server
 * `compiler_css_modules` - whether or not to enable CSS modules
-* `compiler_source_maps` - whether or not to generate source maps
+* `compiler_devtool` - what type of source-maps to generate (set to `false`/`null` to disable)
 * `compiler_vendor` - packages to separate into to the vendor bundle
 
 Structure
@@ -159,13 +157,6 @@ This distinction may not be important for you, but as an explanation: A **Layout
 Webpack
 -------
 
-### Configuration
-The webpack compiler configuration is located in `~/build/webpack`. Here you'll find configurations for each environment; `development` and `production` exist out of the box.
-
-**Note**: There has been a conscious decision to keep development-specific configuration (such as hot-reloading) out of `.babelrc`. By doing this, it's possible to create cleaner development builds (such as for teams that have a `dev` -> `stage` -> `production` workflow) that don't, for example, constantly poll for HMR updates.
-
-So why not just disable HMR? Well, as a further explanation, enabling `react-transform-hmr` in `.babelrc` but building the project without HMR enabled (think of running tests with `NODE_ENV=development` but without a dev server) causes errors to be thrown, so this decision also alleviates that issue.
-
 ### Vendor Bundle
 You can redefine which packages to bundle separately by modifying `compiler_vendor` in `~/config/_base.js`. These default to:
 
@@ -175,7 +166,7 @@ You can redefine which packages to bundle separately by modifying `compiler_vend
   'react',
   'react-redux',
   'react-router',
-  'redux-simple-router',
+  'react-router-redux',
   'redux'
 ]
 ```
@@ -195,16 +186,17 @@ import SomeComponent from 'components/SomeComponent' // Hooray!
 
 ### Globals
 
-These are global variables available to you anywhere in your source code. If you wish to modify them, they can be found as the `globals` key in `~/config/index.js`.
+These are global variables available to you anywhere in your source code. If you wish to modify them, they can be found as the `globals` key in `~/config/_base.js`. When adding new globals, also add them to `~/.eslintrc`.
 
 * `process.env.NODE_ENV` - the active `NODE_ENV` when the build started
 * `__DEV__` - True when `process.env.NODE_ENV` is `development`
 * `__PROD__` - True when `process.env.NODE_ENV` is `production`
+* `__TEST__` - True when `process.env.NODE_ENV` is `test`
+* `__DEBUG__` - True when `process.env.NODE_ENV` is `development` and cli arg `--no_debug` is not set (`npm run dev:no-debug`)
+* `__BASENAME__` - [npm history basename option](https://github.com/rackt/history/blob/master/docs/BasenameSupport.md)
 
 Server
 ------
-
-> **Note:** We're using Koa `^1.0.0` until `^2.0.0` stable is released. A lot of the middleware in Koa's ecosystem hasn't caught up yet, so even though async/await is awesome, `^1.0.0` will currently provide a better developer experience.
 
 This starter kit comes packaged with an Koa server. It's important to note that the sole purpose of this server is to provide `webpack-dev-middleware` and `webpack-hot-middleware` for hot module replacement. Using a custom Koa app in place of [webpack-dev-server](https://github.com/webpack/webpack-dev-server) will hopefully make it easier for users to extend the starter kit to include functionality such as back-end API's, isomorphic/universal rendering, and more -- all without bloating the base boilerplate. Because of this, it should be noted that the provided server is **not** production-ready. If you're deploying to production, take a look at [the deployment section](#deployment).
 
@@ -258,10 +250,17 @@ This is most likely because the new window has been blocked by your popup blocke
 
 Reference: [issue 110](https://github.com/davezuko/react-redux-starter-kit/issues/110)
 
+### Babel Issues
+
+Running into issues with Babel? Babel 6 can be tricky, please either report an issue or try out the [stable v0.18.1 release](https://github.com/davezuko/react-redux-starter-kit/tree/v0.18.1) with Babel 5. If you do report an issue, please try to include relevant debugging information such as your node, npm, and babel versions.
+
+### Internationalization Support
+
+In keeping with the goals of this project, no internationalization support is provided out of the box. However, [juanda99](https://github.com/juanda99) has been kind enough to maintain a fork of this repo with internationalization support, [check it out!](https://github.com/juanda99/react-redux-starter-kit)
+
 ### High editor CPU usage after compilation
 
 While this is common to any sizable application, it's worth noting for those who may not know: if you happen to notice higher CPU usage in your editor after compiling the application, you may need to tell your editor not to process the dist folder. For example, in Sublime you can add:
-
 
 ```
 	"folder_exclude_patterns": [".svn",	".git",	".hg", "CVS",	"node_modules",	"dist"]

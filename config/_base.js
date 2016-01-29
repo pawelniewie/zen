@@ -5,7 +5,7 @@ import { argv } from 'yargs'
 
 const debug = _debug('app:config:_base')
 const config = {
-  env : process.env.NODE_ENV,
+  env : process.env.NODE_ENV || 'development',
 
   // ----------------------------------
   // Project Structure
@@ -26,7 +26,6 @@ const config = {
   // Compiler Configuration
   // ----------------------------------
   compiler_css_modules     : true,
-  compiler_enable_hmr      : false,
   compiler_devtool         : 'source-map',
   compiler_hash_type       : 'hash',
   compiler_fail_on_warning : false,
@@ -44,7 +43,7 @@ const config = {
     'react-router',
     'redux',
     'redux-actions',
-    'redux-simple-router'
+    'react-router-redux'
   ],
 
   // ----------------------------------
@@ -69,6 +68,7 @@ Edit at Your Own Risk
 // ------------------------------------
 // Environment
 // ------------------------------------
+// N.B.: globals added here must _also_ be added to .eslintrc
 config.globals = {
   'process.env'  : {
     'NODE_ENV' : JSON.stringify(config.env)
@@ -76,6 +76,7 @@ config.globals = {
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
+  '__TEST__'     : config.env === 'test',
   '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
   '__DEBUG_NEW_WINDOW__' : !!argv.nw,
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
