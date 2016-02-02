@@ -10,7 +10,7 @@ export const add = createAction(ADD, async (project) => {
     .use(server)
     .send(project)
     .end()
-  return np.body
+  return np.headers.location
 })
 
 export const FETCH_ALL = 'projects/FETCH_ALL'
