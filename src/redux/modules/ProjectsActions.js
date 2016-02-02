@@ -1,23 +1,22 @@
 import { methods, POUCH_DB, FEED_CHANGE, pouchify } from 'redux-pouch'
 import { db, name as dbName } from './db'
 import { createAction } from 'redux-actions'
-// import { routeActions} from 'redux-simple-router'
+import superagent, { pathFor } from '../agent'
 
 export const ADD = 'projects/ADD'
-export const add = createAction(ADD, () => ({
-  [POUCH_DB]: {
-    method: methods.create,
-    db
-  }
-}), (values) => (values))
+export const add = createAction(ADD, async (project) => {
+  const np = await superagent
+    .post(pathFor('/projects'))
+    .send(project)
+    .end()
+  return np.body
+})
 
 export const FETCH_ALL = 'projects/FETCH_ALL'
-export const fetchAll = createAction(FETCH_ALL, () => ({
-  [POUCH_DB]: {
-    method: methods.findAll,
-    db
-  }
-}))
+export const fetchAll = createAction(FETCH_ALL, async () => {
+  const projects = await superagent.get(pathFor('/projects')).end()
+  return projects.body
+})
 
 export const CLEAR = 'projects/CLEAR'
 export const clear = createAction(CLEAR, () => ({

@@ -11,26 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201212915) do
+ActiveRecord::Schema.define(version: 20160202202132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
   create_table "issues", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid     "project_id",               null: false
-    t.string   "summary",                  null: false
-    t.text     "description", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.uuid     "project_id",                    null: false
+    t.string   "summary",                       null: false
+    t.text     "description", default: "",      null: false
+    t.datetime "created_at",  default: "now()", null: false
+    t.datetime "updated_at",  default: "now()", null: false
   end
 
   create_table "projects", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "key",                      null: false
-    t.string   "name",                     null: false
-    t.text     "description", default: "", null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "key",                           null: false
+    t.string   "name",                          null: false
+    t.text     "description", default: "",      null: false
+    t.datetime "created_at",  default: "now()", null: false
+    t.datetime "updated_at",  default: "now()", null: false
   end
 
   add_index "projects", ["key"], name: "index_projects_on_key", unique: true, using: :btree

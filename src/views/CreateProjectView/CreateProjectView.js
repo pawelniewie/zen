@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
-import { add } from '../../redux/modules/ProjectsActions'
+import { actions as projectsActions, add } from '../../redux/modules/ProjectsActions'
 import { routeActions } from 'react-router-redux'
 // import styles from './CreateProjectView.scss'
 
@@ -16,14 +16,14 @@ const mapStateToProps = (state) => ({
 })
 export class CreateProjectView extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    projectsActions: PropTypes.any.isRequired,
+    routeActions: PropTypes.any.isRequired
   };
 
   _handleValidSubmit (values) {
-    const dispatch = this.props.dispatch
-
     this.props.dispatch(add(values))
-      .then(() => dispatch(routeActions.push('/projects/' + values.key)))
+      .then(() => this.props.routeActions.push('/projects/' + values.key))
   }
 
   _handleInvalidSubmit (errors, values) {
@@ -85,4 +85,10 @@ export class CreateProjectView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(CreateProjectView)
+export default connect(mapStateToProps, (dispatch) => {
+  return {
+    routeActions,
+    projectsActions,
+    dispatch
+  }
+})(CreateProjectView)
