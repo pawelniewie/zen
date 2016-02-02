@@ -1,12 +1,13 @@
 import { methods, POUCH_DB, FEED_CHANGE, pouchify } from 'redux-pouch'
 import { db, name as dbName } from './db'
 import { createAction } from 'redux-actions'
-import superagent, { pathFor } from '../agent'
+import superagent, { server } from '../agent'
 
 export const ADD = 'projects/ADD'
 export const add = createAction(ADD, async (project) => {
   const np = await superagent
-    .post(pathFor('/projects'))
+    .post('/projects')
+    .use(server)
     .send(project)
     .end()
   return np.body
@@ -14,7 +15,10 @@ export const add = createAction(ADD, async (project) => {
 
 export const FETCH_ALL = 'projects/FETCH_ALL'
 export const fetchAll = createAction(FETCH_ALL, async () => {
-  const projects = await superagent.get(pathFor('/projects')).end()
+  const projects = await superagent
+    .get('/projects')
+    .use(server)
+    .end()
   return projects.body
 })
 
