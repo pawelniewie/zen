@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styles from './ProjectsView.scss'
 import { fetchAll } from '../../redux/modules/ProjectsActions'
 import { DefaultProjectAvatar } from '../../components/DefaultAvatars'
-import { Label } from 'react-bootstrap'
+import ProjectKey from '../../components/ProjectKey'
 import { Link } from 'react-router'
 
 function getColour (isSyncing, error) {
@@ -30,7 +30,7 @@ class ProjectRow extends React.Component {
           <Link to={'/projects/' + this.props.project.key}>{this.props.project.name}</Link>
         </td>
         <td>
-          <Label bsStyle='primary'>{this.props.project.key}</Label>
+          <ProjectKey projectKey={this.props.project.key}/>
         </td>
       </tr>
     )
@@ -100,11 +100,11 @@ export class ProjectsView extends React.Component {
 
     if (this.props.projects.length > 0) {
       children.push(
-        <ProjectsTable {...this.props}/>
+        <ProjectsTable key={this.props.projects.length} {...this.props}/>
       )
     } else {
       children.push(
-        <NoProjects/>
+        <NoProjects key="zero"/>
       )
     }
 

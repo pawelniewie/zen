@@ -20,9 +20,9 @@ export default (store) => (
     <IndexRoute component={HomeView} />
     <Route path='/projects' component={ProjectsView}/>
     <Route path='/projects/new' component={CreateProjectView}/>
-	<Route path='/projects/:projectKey' component={ProjectView}/>
-	<Route path='/issues/new' component={CreateIssueView}/>
-	<Route path='/issues/:issueKey' component={IssueView}/>
+    <Route path='/projects/:projectKey' component={ProjectView}/>
+    <Route path='/issues/new' component={CreateIssueView}/>
+    <Route path='/issues/:issueKey' component={IssueView}/>
     <Route path='/404' component={NotFoundView} />
     <Redirect from='*' to='/404' />
   </Route>

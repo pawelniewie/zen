@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { actions as counterActions } from '../../redux/modules/counter'
+import { actions as projectsActions } from '../../redux/modules/ProjectsActions'
 // import styles from './IssueView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -17,6 +17,10 @@ export class IssueView extends React.Component {
       issueKey: React.PropTypes.string.isRequired
     })
   };
+
+  componentDidMount () {
+
+  }
 
   render () {
     return (
@@ -35,4 +39,4 @@ export class IssueView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(IssueView)
+export default connect(mapStateToProps, projectsActions)(IssueView)
