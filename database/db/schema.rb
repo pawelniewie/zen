@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202202132) do
+ActiveRecord::Schema.define(version: 20160203061449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160202202132) do
     t.datetime "updated_at",  default: "now()", null: false
   end
 
+  add_index "projects", ["key", "name"], name: "index_projects_on_key_and_name", unique: true, using: :btree
   add_index "projects", ["key"], name: "index_projects_on_key", unique: true, using: :btree
 
   add_foreign_key "issues", "projects", on_delete: :cascade
