@@ -15,7 +15,7 @@ import NotFoundView from 'views/NotFoundView/NotFoundView'
 import CreateIssueView from 'views/CreateIssueView/CreateIssueView'
 import CreateProjectView from 'views/CreateProjectView/CreateProjectView'
 
-export default (
+export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/projects' component={ProjectsView}/>
