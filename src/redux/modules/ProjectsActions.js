@@ -2,6 +2,7 @@ import { methods, POUCH_DB, FEED_CHANGE, pouchify } from 'redux-pouch'
 import { db, name as dbName } from './db'
 import { createAction } from 'redux-actions'
 import superagent, { server } from '../agent'
+import imu from 'immutable'
 
 export const ADD = 'projects/ADD'
 export const add = createAction(ADD, async (project) => {
@@ -11,7 +12,7 @@ export const add = createAction(ADD, async (project) => {
     .send(project)
     .end()
   return np.headers.location
-})
+}, (values) => (values))
 
 export const FETCH_ALL = 'projects/FETCH_ALL'
 export const fetchAll = createAction(FETCH_ALL, async () => {
@@ -44,29 +45,13 @@ export function projectsReducer (state = { all: [] }, action) {
     case ADD:
       switch (action.sequence.type) {
         case START:
-          return [...state, {
+          return imu.fromJS(state).setIn(['newProject'], {
             ...action.meta,
             seqId: action.sequence.id,
             isSyncing: true
-          }]
+          }).toJS()
         case NEXT:
-          // TODO sorting
-          const rest = state.filter(project => project.seqId !== action.sequence.id)
-          let nextProject = {
-            ...state.find(project => project.seqId === action.sequence.id),
-            isSyncing: false
-          }
-
-          if (action.error) {
-            nextProject.error = action.payload
-          } else {
-            nextProject = {
-              ...nextProject,
-              ...action.payload
-            }
-          }
-
-          return [...rest, nextProject]
+          return imu.fromJS(state).updateIn(['newProject', 'isSyncing'], (value) => false).toJS()
       }
       break
 
