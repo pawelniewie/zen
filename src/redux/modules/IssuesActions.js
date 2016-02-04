@@ -40,7 +40,7 @@ export const actions = {
 const NEXT = 'next'
 const START = 'start'
 
-export function issuesReducer (state = { all: [] }, action) {
+export function issuesReducer (state = { open: [] }, action) {
   switch (action.type) {
     case ADD:
       switch (action.sequence.type) {
@@ -58,11 +58,9 @@ export function issuesReducer (state = { all: [] }, action) {
     case FETCH_BY_PROJECT:
       switch (action.sequence.type) {
         case START:
-          return {...state, currentProject: {
-            isSyncing: true
-          }}
+          return update(state, {fetchingOpen: {$set: true}})
         case NEXT:
-          return update(state, {currentProject: {$merge: {...action.payload, isSyncing: false}}})
+          return update(state, {open: { $set: action.payload }, fetchingOpen: {$set: false}})
       }
       break
 
