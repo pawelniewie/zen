@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { PropTypes as PT } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { actions as counterActions } from '../../redux/modules/counter'
+import { actions as projectsActions } from '../../redux/modules/ProjectsActions'
+import { actions as issuesActions } from '../../redux/modules/IssuesActions'
+import Icons from '../../components/Icons'
 // import styles from './IssueView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -9,16 +12,36 @@ import { actions as counterActions } from '../../redux/modules/counter'
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  fetchingProjects: state.projects.fetchingAll,
+  allProjects: state.projects.all
 })
 export class IssueView extends React.Component {
   static propTypes = {
-    params: React.PropTypes.shape({
-      issueKey: React.PropTypes.string.isRequired
+    allProjects: PT.any,
+    fetchingProjects: PT.bool,
+    projects: PT.shape({
+      fetchAll: PT.func
     })
   };
 
+  componentDidMount () {
+    if (!this.props.allProjects || !this.props.allProjects.length) {
+      this.props.projects.fetchAll()
+    }
+  }
+
   render () {
+    var projects = (<Icons.Loading/>)
+
+    if (!this.props.fetchingProjects && this.props.allProjects && this.props.allProjects.length > 0) {
+      var options = this.props.allProjects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)
+      projects = (
+        <select className='form-control' id='project'>
+          {options}
+        </select>
+      )
+    }
+
     return (
       <div className='container'>
         <div className='page-header'>
@@ -35,9 +58,7 @@ export class IssueView extends React.Component {
           <div className='form-group'>
             <label htmlFor='project' className='col-sm-2 control-label'>Project</label>
             <div className='col-sm-10'>
-              <select className='form-control' id='project'>
-                <option>Test</option>
-              </select>
+              {projects}
             </div>
           </div>
           <div className='form-group'>
@@ -63,4 +84,7 @@ export class IssueView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(IssueView)
+export default connect(mapStateToProps, (dispatch) => ({
+  projects: bindActionCreators(projectsActions, dispatch),
+  issues: bindActionCreators(issuesActions, dispatch)
+}))(IssueView)

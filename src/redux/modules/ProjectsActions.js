@@ -1,5 +1,3 @@
-import { methods, POUCH_DB, FEED_CHANGE, pouchify } from 'redux-pouch'
-import { db, name as dbName } from './db'
 import { createAction } from 'redux-actions'
 import superagent, { server } from '../agent'
 import update from 'react/lib/update'
@@ -34,25 +32,16 @@ export const fetchAll = createAction(FETCH_ALL, async () => {
   return projects.body
 })
 
-export const CLEAR = 'projects/CLEAR'
-export const clear = createAction(CLEAR, () => ({
-  [POUCH_DB]: {
-    method: methods.deleteAll,
-    db
-  }
-}))
-
 export const actions = {
   add,
   fetchAll,
-  fetchByKey,
-  clear
+  fetchByKey
 }
 
 const NEXT = 'next'
 const START = 'start'
 
-export function projectsReducer (state = { all: [] }, action) {
+export function projectsReducer (state = { all: [], fetchingAll: false }, action) {
   switch (action.type) {
     case ADD:
       switch (action.sequence.type) {
@@ -78,9 +67,6 @@ export function projectsReducer (state = { all: [] }, action) {
       }
       break
 
-    case CLEAR:
-      return action.sequence.type === NEXT && !action.error ? [] : state
-
     case FETCH_ALL:
       switch (action.sequence.type) {
         case START:
@@ -90,27 +76,9 @@ export function projectsReducer (state = { all: [] }, action) {
       }
       break
 
-      // TODO @sven? :)
-    case FEED_CHANGE:
-      const changeBox = action.payload.change.doc
-        // TODO name comparison is a bit like cheating here but it illustrates the point
-        // This has to be worked out in more depth anyway
-      const rest = state.filter(project => project.name !== changeBox.name)
-      const nextProject = state.find(project => project.name === changeBox.name)
-
-      if (changeBox._deleted) {
-        return rest
-      } else {
-        return typeof nextProject === 'undefined'
-          ? [...state, changeBox]
-          : (typeof nextProject.seqId === 'undefined'
-              ? [...rest, changeBox] : state)
-      }
-      break
-
     default:
       return state
   }
 }
 
-export default pouchify(projectsReducer, dbName)
+export default projectsReducer
