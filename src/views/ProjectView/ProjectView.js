@@ -36,13 +36,19 @@ export class ProjectView extends React.Component {
 
     if (this.props.currentProject && this.props.currentProject.isSyncing === false) {
       children.push(
-        <h1 key='header'>
-          <span className='fa-stack'>
-            <i className='fa fa-circle fa-stack-2x'></i>
-            <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
-          </span>
-          {this.props.currentProject.name} <ProjectKey projectKey={this.props.currentProject.key}/>
-        </h1>
+        <div key='page-header' className='page-header'>
+          <h1>
+            <span className='fa-stack'>
+              <i className='fa fa-circle fa-stack-2x'></i>
+              <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
+            </span>
+            {this.props.currentProject.name} <ProjectKey projectKey={this.props.currentProject.key}/>
+          </h1>
+        </div>
+      )
+
+      children.push(
+        <IssuesListView key='issues' {...this.props}/>
       )
     } else {
       children.push(<Icons.Loading key='loading'/>)
@@ -50,11 +56,7 @@ export class ProjectView extends React.Component {
 
     return (
       <div className='container'>
-        <div className='page-header'>
-          {children}
-        </div>
-
-        <IssuesListView {...this.props}/>
+        {children}
       </div>
     )
   }

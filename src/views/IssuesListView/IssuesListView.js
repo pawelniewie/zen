@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { PropTypes as PT } from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router'
-import { actions as counterActions } from '../../redux/modules/counter'
+import { actions as issuesActions } from '../../redux/modules/IssuesActions'
 // import styles from './IssuesListView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -9,15 +8,24 @@ import { actions as counterActions } from '../../redux/modules/counter'
 // export the decorated component after the main class definition so
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-const mapStateToProps = (state) => ({
-  counter: state.counter
+const mapStateToProps = (state, ownProps) => ({
+  currentProject: ownProps.currentProject
 })
-export class IssueView extends React.Component {
+export class IssueListView extends React.Component {
   static propTypes = {
-    counter: React.PropTypes.number.isRequired,
-    doubleAsync: React.PropTypes.func.isRequired,
-    increment: React.PropTypes.func.isRequired
+    projectKey: PT.string.isRequired,
+    currentProject: PT.shape({
+      name: PT.string,
+      key: PT.string,
+      isSyncing: PT.bool.isRequired,
+      description: PT.string
+    }),
+    fetchByProject: PT.func.isRequired
   };
+
+  componentDidMount () {
+    this.props.fetchByProject(this.props.currentProject.id)
+  }
 
   render () {
     return (
@@ -57,5 +65,4 @@ export class IssueView extends React.Component {
     )
   }
 }
-
-export default connect(mapStateToProps, counterActions)(IssueView)
+export default connect(mapStateToProps, issuesActions)(IssueListView)
