@@ -2,12 +2,15 @@ import { createAction } from 'redux-actions'
 import superagent, { server } from '../agent'
 import update from 'react/lib/update'
 
+export const SELECT_PROJECT = 'issues/SELECT_PROJECT'
+export const selectProject = createAction(SELECT_PROJECT)
+
 export const ADD = 'issues/ADD'
-export const add = createAction(ADD, async (project) => {
+export const add = createAction(ADD, async (issue) => {
   const np = await superagent
     .post('/issues')
     .use(server)
-    .send(project)
+    .send(issue)
     .end()
   return np.headers.location
 }, (values) => (values))
@@ -34,7 +37,8 @@ export const fetchAll = createAction(FETCH_ALL, async () => {
 export const actions = {
   add,
   fetchAll,
-  fetchByProject
+  fetchByProject,
+  selectProject
 }
 
 const NEXT = 'next'
@@ -45,15 +49,18 @@ export function issuesReducer (state = { open: [] }, action) {
     case ADD:
       switch (action.sequence.type) {
         case START:
-          return {...state, newProject: {
+          return {...state, newIssue: {
             ...action.meta,
             seqId: action.sequence.id,
             isSyncing: true
           }}
         case NEXT:
-          return update(state, {newProject: {isSyncing: {$set: false}}})
+          return update(state, {newIssue: {isSyncing: {$set: false}}})
       }
       break
+
+    case SELECT_PROJECT:
+      return {...state, createIssue: {projectId: action.payload.projectId}}
 
     case FETCH_BY_PROJECT:
       switch (action.sequence.type) {
