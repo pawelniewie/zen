@@ -17,3 +17,20 @@ deploy:
         token: $GITHUB_TOKEN
         path: dist
         domain: usezen.it
+
+  digitalocean:
+    - add-to-known_hosts:
+        hostname: usezen.it
+    - mktemp:
+        envvar: PRIVATEKEY_PATH
+    - create-file:
+        name: write key
+        filename: $PRIVATEKEY_PATH
+        content: $SSH_PRIVATE
+        overwrite: true
+    - script:
+        name: transfer application
+        code: |
+          pwd
+          ls -la
+          scp -R -i $PRIVATEKEY_PATH dist wercker@usezen.it:/var/www/usezen.it
