@@ -31,4 +31,4 @@ deploy:
         code: |
           cd dist
           ls -la
-          scp -r -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking=no" dist wercker@$DESTINATION:/var/www/usezen.it
+          scp -r -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking=no" . wercker@$DESTINATION:/var/www/usezen.it
