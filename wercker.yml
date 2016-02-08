@@ -19,8 +19,6 @@ deploy:
         domain: usezen.it
 
   digitalocean:
-    - add-to-known_hosts:
-        hostname: usezen.it
     - mktemp:
         envvar: PRIVATEKEY_PATH
     - create-file:
@@ -33,4 +31,4 @@ deploy:
         code: |
           pwd
           ls -la
-          scp -r -i $PRIVATEKEY_PATH dist wercker@$DESTINATION:/var/www/usezen.it
+          scp -r -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking=no" dist wercker@$DESTINATION:/var/www/usezen.it
