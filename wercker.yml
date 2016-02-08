@@ -33,4 +33,4 @@ deploy:
         code: |
           pwd
           ls -la
-          scp -r -i $PRIVATEKEY_PATH dist wercker@usezen.it:/var/www/usezen.it
+          scp -r -i $PRIVATEKEY_PATH dist wercker@$DESTINATION:/var/www/usezen.it
