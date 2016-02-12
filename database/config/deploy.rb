@@ -3,6 +3,7 @@ lock '3.4.0'
 
 set :application, 'zen'
 set :repo_url, 'git@github.com:pawelniewie/zen.git'
+set :repo_tree, 'database'
 set :git_shallow_clone, 1
 set :deploy_via, :remote_cache
 
