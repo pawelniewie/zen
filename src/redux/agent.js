@@ -7,4 +7,4 @@ const agent = superpromise(superagent, Promise)
 
 export default agent
 
-export const server = superprefix(__PROD__ ? 'http://database.usezen.it:3001' : 'http://localhost:3001')
+export const server = superprefix(__PROD__ ? 'https://database.usezen.it' : 'http://localhost:3001')
