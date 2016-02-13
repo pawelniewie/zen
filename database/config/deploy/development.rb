@@ -12,7 +12,7 @@
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '127.0.0.1', user: 'wercker', roles: %w{database}, ssh_options: {
+server '127.0.0.1', user: 'wercker', roles: %w{app db}, ssh_options: {
   port: 2222
 }
 

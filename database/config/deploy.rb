@@ -34,17 +34,17 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute :sv, 2, "/home/deployer/service/teamstatus"
-      begin
-        execute :sv, 'restart', "/home/deployer/service/sidekiq"
-      rescue
-        execute :sv, 'kill', "/home/deployer/service/sidekiq"
-      end
-      begin
-        execute :sv, 'restart', "/home/deployer/service/websocket"
-      rescue
-        execute :sv, 'kill', "/home/deployer/service/websocket"
-      end
+      # execute :sv, 2, "/home/deployer/service/teamstatus"
+      # begin
+      #   execute :sv, 'restart', "/home/deployer/service/sidekiq"
+      # rescue
+      #   execute :sv, 'kill', "/home/deployer/service/sidekiq"
+      # end
+      # begin
+      #   execute :sv, 'restart', "/home/deployer/service/websocket"
+      # rescue
+      #   execute :sv, 'kill', "/home/deployer/service/websocket"
+      # end
     end
   end
 
