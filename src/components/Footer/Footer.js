@@ -9,9 +9,6 @@ export default class Footer extends React.Component {
         <div>
           <hr />
           <Link to='/404'>Go to 404 Page</Link><br/>
-          <Link to='/projects/TEST'>Go to Test project</Link><br/>
-          <Link to='/projects'>Go to projects</Link><br/>
-          <Link to='/issues/TEST-1'>Go to TEST-1 issue</Link><br/>
         </div>
     )
   }
