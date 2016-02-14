@@ -43,11 +43,11 @@ deploy:
         overwrite: true
     - script:
         code: |
-          cd database
           ls -la
     - bundle-install:
-        gemfile: database/Gemfile
+        cwd: database
     - script:
+        cwd: database
         name: deploy with capistrano
         code: |
           cap production deploy
