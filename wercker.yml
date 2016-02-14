@@ -34,8 +34,16 @@ deploy:
           scp -r -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking=no" . wercker@$DESTINATION:/var/www/usezen.it
 
   database:
+    - mktemp:
+        envvar: PRIVATEKEY_PATH
+    - create-file:
+        name: write key
+        filename: $PRIVATEKEY_PATH
+        content: $SSH_PRIVATE
+        overwrite: true
     - script:
         code: |
+          ls -la
           cd database
     - bundle-install
     - script:
