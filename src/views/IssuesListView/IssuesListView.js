@@ -21,7 +21,7 @@ class Issues extends React.Component {
   render () {
     var children = this.props.issues.map((issue) => {
       return (
-          <tr key='{ issue.id }'>
+          <tr key={ issue.id }>
             <th scope='row'>
               <Link to={'/issues/' + issue.id}>{issue.summary}</Link>
             </th>
