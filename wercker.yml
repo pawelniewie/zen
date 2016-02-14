@@ -9,7 +9,7 @@ build:
     - script:
         code: NODE_ENV=production npm run deploy
     - script:
-        code: cp -R dist "$WERCKER_OUTPUT_DIR"
+        code: cp -R . "$WERCKER_OUTPUT_DIR"
 
 deploy:
   steps:
@@ -43,7 +43,6 @@ deploy:
         overwrite: true
     - script:
         code: |
-          ls -la
           cd database
     - bundle-install
     - script:
