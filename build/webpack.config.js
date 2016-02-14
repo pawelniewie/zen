@@ -47,7 +47,7 @@ webpackConfig.output = {
 webpackConfig.plugins = [
   new webpack.DefinePlugin(config.globals),
   new HtmlWebpackPlugin({
-    template: paths.client('index.html'),
+    template: paths.client('index.jade'),
     hash: false,
     filename: 'index.html',
     inject: 'body',
@@ -118,6 +118,10 @@ webpackConfig.module.loaders = [{
 {
   test: /\.json$/,
   loader: 'json'
+},
+{
+  test: /\.jade$/,
+  loader: 'jade'
 }]
 
 // Styles

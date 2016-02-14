@@ -54,6 +54,8 @@
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "history": "^2.0.0-rc2",
+    "jade": "^1.11.0",
+    "jade-loader": "^0.8.0",
     "koa": "^2.0.0-alpha.3",
     "koa-connect-history-api-fallback": "^0.3.0",
     "koa-convert": "^1.2.0",
