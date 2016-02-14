@@ -13,6 +13,33 @@ class NoIssues extends React.Component {
   }
 }
 
+class Issues extends React.Component {
+  static propTypes = {
+    issues: PT.any
+  };
+
+  render () {
+    var children = this.props.issues.map((issue, idx) => {
+      return (
+          <tr key='{ idx }'>
+            <th scope='row'>
+              <Link to={'/issues/' + issue.id}>{issue.summary}</Link>
+            </th>
+            <td>{issue.description}</td>
+          </tr>
+        )
+    })
+    return (
+      <div key="issues-table" className='table-responsive'>
+        <table className='table table-striped'>
+          <tbody>
+            {children}
+          </tbody>
+        </table>
+      </div>)
+  }
+}
+
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
 // export the decorated component after the main class definition so
@@ -46,37 +73,7 @@ export class IssueListView extends React.Component {
 
     if (!this.props.fetchingOpen) {
       if (this.props.issues && this.props.issues.length > 0) {
-        children.push(
-          <div key="issues-table" className='table-responsive'>
-            <table className='table table-striped'>
-              <tbody>
-                <tr>
-                  <th scope='row'>TEST-1</th>
-                  <td>Add project name</td>
-                </tr>
-                <tr>
-                  <th scope='row'>TEST-2</th>
-                  <td>Add issue icons</td>
-                </tr>
-                <tr>
-                  <th scope='row'>TEST-3</th>
-                  <td>Each issue should be a link to issue view</td>
-                </tr>
-                <tr>
-                  <th scope='row'>TEST-4</th>
-                  <td>On issue list show issue key</td>
-                </tr>
-                <tr>
-                  <th scope='row'>TEST-5</th>
-                  <td>Add recently completed issues</td>
-                </tr>
-                <tr>
-                  <th scope='row'>TEST-6</th>
-                  <td>Show a list of team members in the project</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>)
+        children.push(<Issues key="issues" {...this.props}/>)
       } else {
         children.push(<NoIssues key="zero"/>)
       }
