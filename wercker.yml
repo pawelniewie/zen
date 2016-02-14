@@ -32,3 +32,13 @@ deploy:
           cd dist
           ls -la
           scp -r -i $PRIVATEKEY_PATH -o "StrictHostKeyChecking=no" . wercker@$DESTINATION:/var/www/usezen.it
+
+  database:
+    - script:
+        code: |
+          cd database
+    - bundle-install
+    - script:
+        name: deploy with capistrano
+        code: |
+          cap production deploy
