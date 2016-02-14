@@ -46,6 +46,7 @@ deploy:
           cd database
           ls -la
     - bundle-install
+        gemfile: database/Gemfile
     - script:
         name: deploy with capistrano
         code: |
