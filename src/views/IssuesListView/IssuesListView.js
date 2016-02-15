@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { actions as issuesActions } from '../../redux/modules/IssuesActions'
 import Icons from '../../components/Icons'
 import { Link } from 'react-router'
-// import styles from './IssuesListView.scss'
+import styles from './IssuesListView.scss'
 
 class NoIssues extends React.Component {
   render() {
@@ -15,16 +15,19 @@ class NoIssues extends React.Component {
 
 class Issues extends React.Component {
   static propTypes = {
-    issues: PT.any
+    issues: PT.any,
+    issueKey: PT.func.isRequired
   };
 
   render () {
     var children = this.props.issues.map((issue) => {
+      var issueKey = this.props.issueKey(issue)
       return (
           <tr key={ issue.id }>
-            <th scope='row'>
-              <Link to={'/issues/' + issue.id}>{issue.summary}</Link>
+            <th scope='row' className={styles['issue-key']}>
+              <Link to={'/issues/' + issueKey}>{issueKey}</Link>
             </th>
+            <td><Link to={'/issues/' + issueKey}>{issue.summary}</Link></td>
             <td>{issue.description}</td>
           </tr>
         )
@@ -73,7 +76,10 @@ export class IssueListView extends React.Component {
 
     if (!this.props.fetchingOpen) {
       if (this.props.issues && this.props.issues.length > 0) {
-        children.push(<Issues key="issues" {...this.props}/>)
+        var issueKey = (issue) => {
+          return this.props.currentProject.key + '-' + issue.no
+        }
+        children.push(<Issues key="issues" {...this.props} issueKey={issueKey}/>)
       } else {
         children.push(<NoIssues key="zero"/>)
       }
