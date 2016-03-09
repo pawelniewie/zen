@@ -6,10 +6,10 @@ import { Link } from 'react-router'
 export default class Footer extends React.Component {
   render () {
     return (
-        <div>
-          <hr />
-          <Link to='/404'>Go to 404 Page</Link><br/>
-        </div>
+      <div>
+        <hr />
+        <Link to='/404'>Go to 404 Page</Link><br/>
+      </div>
     )
   }
 }

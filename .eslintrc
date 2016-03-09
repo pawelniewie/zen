@@ -20,6 +20,7 @@
   },
   "rules": {
     "semi" : [2, "never"],
+    "arrow-parens": 0,
     "react-in-jsx-scope": 0,
     "space-before-function-paren": 0,
     "jsx-quotes": 0,

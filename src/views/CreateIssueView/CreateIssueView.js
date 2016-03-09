@@ -1,14 +1,15 @@
 import React, { PropTypes as PT } from 'react'
+import autoBind from 'react-autobind'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { actions as projectsActions } from '../../redux/modules/ProjectsActions'
-import { actions as issuesActions } from '../../redux/modules/IssuesActions'
+import { actions as issuesActions, add as addIssue,
+  fetchByLocation as fetchIssueByLocation } from '../../redux/modules/IssuesActions'
+import { push } from 'react-router-redux'
 import Icons from '../../components/Icons'
-import { add } from '../../redux/modules/IssuesActions'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
-import { routeActions } from 'react-router-redux'
-// import styles from './IssueView.scss'
+// import styles from './CreateIssueView.scss'
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -19,20 +20,26 @@ const mapStateToProps = (state) => ({
   fetchingProjects: state.projects.fetchingAll,
   allProjects: state.projects.all
 })
-export class IssueView extends React.Component {
+export class CreateIssueView extends React.Component {
   static propTypes = {
     allProjects: PT.any,
     fetchingProjects: PT.bool,
     projects: PT.shape({
       fetchAll: PT.func
     }),
-    dispatch: PT.func.isRequired,
     currentProject: PT.any,
     projectId: PT.any,
     issues: PT.shape({
-      selectProject: PT.func.isRequired
-    })
+      selectProject: PT.func.isRequired,
+      add: PT.func.isRequired
+    }),
+    dispatch: PT.func.isRequired
   };
+
+  constructor() {
+    super()
+    autoBind(this)
+  }
 
   componentDidMount () {
     if (!this.props.allProjects || !this.props.allProjects.length) {
@@ -41,8 +48,11 @@ export class IssueView extends React.Component {
   }
 
   _handleValidSubmit (values) {
-    this.props.dispatch(add(Object.assign({}, values, {project_id: this.props.projectId || this.props.allProjects[0].id})))
-      .then((result) => this.props.dispatch(routeActions.push('/issues/' + result.key)))
+    const dispatch = this.props.dispatch
+    const payload = Object.assign({}, values, {project_id: this.props.projectId || this.props.allProjects[0].id})
+    dispatch(addIssue(payload))
+      .then(location => dispatch(fetchIssueByLocation(location)))
+      .then(issue => dispatch(push('/issues/' + issue.key)))
   }
 
   _handleInvalidSubmit (errors, values) {
@@ -58,9 +68,10 @@ export class IssueView extends React.Component {
     var projects = (<Icons.Loading/>)
 
     if (!this.props.fetchingProjects && this.props.allProjects && this.props.allProjects.length > 0) {
-      var options = this.props.allProjects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)
+      var options = this.props.allProjects.map((project) =>
+        <option key={project.id} value={project.id}>{project.name}</option>)
       projects = (
-        <select className='form-control' id='project' onChange={this._setProjectId.bind(this)}>
+        <select className='form-control' id='project' onChange={this._setProjectId}>
           {options}
         </select>
       )
@@ -70,15 +81,16 @@ export class IssueView extends React.Component {
       <div className='container'>
         <div className='page-header'>
           <h1>
-          <span className='fa-stack'>
-            <i className='fa fa-circle fa-stack-2x'></i>
-            <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
-          </span>
-          Create issue
+            <span className='fa-stack'>
+              <i className='fa fa-circle fa-stack-2x'></i>
+              <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
+            </span>
+            Create issue
           </h1>
         </div>
 
-        <Form className='form-horizontal' onValidSubmit={this._handleValidSubmit.bind(this)} onInvalidSubmit={this._handleInvalidSubmit.bind(this)}>
+        <Form className='form-horizontal' onValidSubmit={this._handleValidSubmit}
+          onInvalidSubmit={this._handleInvalidSubmit}>
           <div className='form-group'>
             <label htmlFor='project' className='col-sm-2 control-label'>Project</label>
             <div className='col-sm-10'>
@@ -118,5 +130,5 @@ export class IssueView extends React.Component {
 export default connect(mapStateToProps, (dispatch) => ({
   projects: bindActionCreators(projectsActions, dispatch),
   issues: bindActionCreators(issuesActions, dispatch),
-  dispatch
-}))(IssueView)
+  dispatch: dispatch
+}))(CreateIssueView)

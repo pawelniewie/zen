@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { PropTypes as PT } from 'react'
 import { connect } from 'react-redux'
 import { actions as issuesActions } from '../../redux/modules/IssuesActions'
 import ProjectKey from '../../components/ProjectKey'
 import Icons from '../../components/Icons'
 // import styles from './IssueView.scss'
+
+class IssuesDetailsView extends React.Component {
+
+}
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -16,9 +20,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 export class IssueView extends React.Component {
   static propTypes = {
-    params: React.PropTypes.shape({
-      issueKey: React.PropTypes.string.isRequired
-    })
+    issueKey: PT.string.isRequired,
+    fetchByKey: PT.func.isRequired,
+    currentIssue: PT.shape
   };
 
   componentDidMount () {

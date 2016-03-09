@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
+import autoBind from 'react-autobind'
 import { connect } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
-import { add } from '../../redux/modules/ProjectsActions'
-import { routeActions } from 'react-router-redux'
+import { add as addProject } from '../../redux/modules/ProjectsActions'
+import { push } from 'react-router-redux'
 // import styles from './CreateProjectView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -21,9 +22,14 @@ export class CreateProjectView extends React.Component {
     routeActions: PropTypes.any.isRequired
   };
 
+  constructor() {
+    super()
+    autoBind(this)
+  }
+
   _handleValidSubmit (values) {
-    this.props.dispatch(add(values))
-      .then(() => this.props.dispatch(routeActions.push('/projects/' + values.key)))
+    this.props.dispatch(addProject(values))
+      .then(() => this.props.dispatch(push('/projects/' + values.key)))
   }
 
   _handleInvalidSubmit (errors, values) {
@@ -36,15 +42,16 @@ export class CreateProjectView extends React.Component {
       <div className='container'>
         <div className='page-header'>
           <h1>
-          <span className='fa-stack'>
-            <i className='fa fa-circle fa-stack-2x'></i>
-            <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
-          </span>
-          Create project
+            <span className='fa-stack'>
+              <i className='fa fa-circle fa-stack-2x'></i>
+              <i className='fa fa-rocket fa-stack-1x fa-inverse'></i>
+            </span>
+            Create project
           </h1>
         </div>
 
-        <Form className='form-horizontal' onValidSubmit={this._handleValidSubmit.bind(this)} onInvalidSubmit={this._handleInvalidSubmit.bind(this)}>
+        <Form className='form-horizontal' onValidSubmit={this._handleValidSubmit}
+          onInvalidSubmit={this._handleInvalidSubmit}>
           <ValidatedInput
             type='text'
             label='Name'

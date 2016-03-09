@@ -3,7 +3,7 @@ import superagent, { server } from '../agent'
 import update from 'react/lib/update'
 
 export const ADD = 'projects/ADD'
-export const add = createAction(ADD, async (project) => {
+export const add = createAction(ADD, async project => {
   const np = await superagent
     .post('/projects')
     .use(server)
@@ -13,7 +13,7 @@ export const add = createAction(ADD, async (project) => {
 }, (values) => (values))
 
 export const FETCH_BY_KEY = 'projects/FETCH_BY_KEY'
-export const fetchByKey = createAction(FETCH_BY_KEY, async (key) => {
+export const fetchByKey = createAction(FETCH_BY_KEY, async key => {
   const resp = await superagent
     .get('/projects')
     .query({'key': 'eq.' + key})

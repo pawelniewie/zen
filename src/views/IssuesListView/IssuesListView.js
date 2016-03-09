@@ -23,14 +23,14 @@ class Issues extends React.Component {
     var children = this.props.issues.map((issue) => {
       var issueKey = this.props.issueKey(issue)
       return (
-          <tr key={ issue.id }>
-            <th scope='row' className={styles['issue-key']}>
-              <Link to={'/issues/' + issueKey}>{issueKey}</Link>
-            </th>
-            <td><Link to={'/issues/' + issueKey}>{issue.summary}</Link></td>
-            <td>{issue.description}</td>
-          </tr>
-        )
+        <tr key={issue.id}>
+          <th scope='row' className={styles['issue-key']}>
+            <Link to={'/issues/' + issueKey}>{issueKey}</Link>
+          </th>
+          <td><Link to={'/issues/' + issueKey}>{issue.summary}</Link></td>
+          <td>{issue.description}</td>
+        </tr>
+      )
     })
     return (
       <div key="issues-table" className='table-responsive'>

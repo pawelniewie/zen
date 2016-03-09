@@ -112,7 +112,7 @@ export class ProjectsView extends React.Component {
       <div className='container'>
         <h1>All projects</h1>
 
-        { children }
+        {children}
       </div>
     )
   }

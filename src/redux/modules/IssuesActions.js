@@ -6,7 +6,7 @@ export const SELECT_PROJECT = 'issues/SELECT_PROJECT'
 export const selectProject = createAction(SELECT_PROJECT)
 
 export const ADD = 'issues/ADD'
-export const add = createAction(ADD, async (issue) => {
+export const add = createAction(ADD, async issue => {
   const np = await superagent
     .post('/issues')
     .use(server)
@@ -16,7 +16,7 @@ export const add = createAction(ADD, async (issue) => {
 }, (values) => (values))
 
 export const FETCH_BY_PROJECT = 'issues/FETCH_BY_PROJECT'
-export const fetchByProject = createAction(FETCH_BY_PROJECT, async (id) => {
+export const fetchByProject = createAction(FETCH_BY_PROJECT, async id => {
   const resp = await superagent
     .get('/issues')
     .query({'project_id': 'eq.' + id})
@@ -25,8 +25,17 @@ export const fetchByProject = createAction(FETCH_BY_PROJECT, async (id) => {
   return resp.body
 }, (values) => (values))
 
+export const FETCH_BY_LOCATION = 'issues/FETCH_BY_LOCATION'
+export const fetchByLocation = createAction(FETCH_BY_LOCATION, async location => {
+  const resp = await superagent
+    .get(location)
+    .use(server)
+    .end()
+  return resp.body
+}, (values) => (values))
+
 export const FETCH_BY_KEY = 'issues/FETCH_BY_KEY'
-export const fetchByKey = createAction(FETCH_BY_KEY, async (key) => {
+export const fetchByKey = createAction(FETCH_BY_KEY, async key => {
   const resp = await superagent
     .get('/issues')
     .query({'project_id': 'eq.' + key})
@@ -49,6 +58,7 @@ export const actions = {
   fetchAll,
   fetchByProject,
   fetchByKey,
+  fetchByLocation,
   selectProject
 }
 
