@@ -84,6 +84,7 @@ export function issuesReducer (state = { open: [] }, action) {
       return {...state, createIssue: {projectId: action.payload.projectId}}
 
     case FETCH_BY_PROJECT:
+    case FETCH_BY_LOCATION:
       switch (action.sequence.type) {
         case START:
           return update(state, {fetchingOpen: {$set: true}})
