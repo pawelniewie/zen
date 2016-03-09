@@ -25,6 +25,16 @@ export const fetchByProject = createAction(FETCH_BY_PROJECT, async (id) => {
   return resp.body
 }, (values) => (values))
 
+export const FETCH_BY_KEY = 'issues/FETCH_BY_KEY'
+export const fetchByKey = createAction(FETCH_BY_KEY, async (key) => {
+  const resp = await superagent
+    .get('/issues')
+    .query({'project_id': 'eq.' + key})
+    .use(server)
+    .end()
+  return resp.body
+}, (values) => (values))
+
 export const FETCH_ALL = 'issues/FETCH_ALL'
 export const fetchAll = createAction(FETCH_ALL, async () => {
   const projects = await superagent
@@ -38,6 +48,7 @@ export const actions = {
   add,
   fetchAll,
   fetchByProject,
+  fetchByKey,
   selectProject
 }
 

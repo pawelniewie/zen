@@ -4,10 +4,14 @@
     "standard",
     "standard-react"
   ],
+  "plugins" : [
+    "flow-vars"
+  ],
   "env"     : {
     "browser" : true
   },
   "globals" : {
+    "Action"       : false,
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,
@@ -18,6 +22,9 @@
     "semi" : [2, "never"],
     "react-in-jsx-scope": 0,
     "space-before-function-paren": 0,
-    "jsx-quotes": 0
+    "jsx-quotes": 0,
+    "max-len": [2, 120, 2],
+    "flow-vars/define-flow-type": 1,
+    "flow-vars/use-flow-type": 1
   }
 }
