@@ -6,9 +6,16 @@ import { Link } from 'react-router'
 import styles from './IssuesListView.scss'
 
 class NoIssues extends React.Component {
+  static propTypes = {
+    projectKey: PT.string.isRequired
+  };
+
   render() {
     return (
-      <div>Hey, there are no issues yet. You can <Link to='/issues/new'>create one</Link> right now!</div>
+      <p>
+        Hey, there are no issues yet.
+        You can <Link to={'/issues/new?projectKey=' + this.props.projectKey}>create one</Link> right now!
+      </p>
     )
   }
 }
@@ -81,7 +88,7 @@ export class IssueListView extends React.Component {
         }
         children.push(<Issues key="issues" {...this.props} issueKey={issueKey}/>)
       } else {
-        children.push(<NoIssues key="zero"/>)
+        children.push(<NoIssues key="zero" projectKey={this.props.currentProject.key}/>)
       }
     } else {
       children.push(<Icons.Loading key="loading"/>)

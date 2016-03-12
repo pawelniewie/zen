@@ -2,6 +2,8 @@
   @import 'base';
   @import 'vendor/normalize';
 
+  @import "../../node_modules/react-select/scss/default.scss";
+
   // Some best-practice CSS that's useful for most apps
   // Just remove them if they're not what you want
   html {
@@ -28,7 +30,7 @@
 		.view-container {
 			.container {
 				width: 100%;
-			}	
+			}
 		}
 	}
 }

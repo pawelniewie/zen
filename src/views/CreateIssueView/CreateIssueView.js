@@ -2,13 +2,13 @@ import React, { PropTypes as PT } from 'react'
 import autoBind from 'react-autobind'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { actions as projectsActions } from '../../redux/modules/ProjectsActions'
+import { actions as projectsActions, fetchAll as fetchAllProjects } from '../../redux/modules/ProjectsActions'
 import { actions as issuesActions, add as addIssue,
   fetchByLocation as fetchIssueByLocation } from '../../redux/modules/IssuesActions'
 import { push } from 'react-router-redux'
-import Icons from '../../components/Icons'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
+import Select from 'react-select'
 // import styles from './CreateIssueView.scss'
 
 // We define mapStateToProps where we'd normally use
@@ -16,9 +16,10 @@ import { Form, ValidatedInput } from 'react-bootstrap-validation'
 // export the decorated component after the main class definition so
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   fetchingProjects: state.projects.fetchingAll,
-  allProjects: state.projects.all
+  allProjects: state.projects.all,
+  selectedProjectKey: ownProps.location.query.projectKey
 })
 export class CreateIssueView extends React.Component {
   static propTypes = {
@@ -33,17 +34,21 @@ export class CreateIssueView extends React.Component {
       selectProject: PT.func.isRequired,
       add: PT.func.isRequired
     }),
-    dispatch: PT.func.isRequired
+    dispatch: PT.func.isRequired,
+    selectedProjectKey: PT.string
   };
 
-  constructor() {
+  constructor(props) {
     super()
     autoBind(this)
+    this.state = {
+      selectedProjectKey: props.selectedProjectKey
+    }
   }
 
   componentDidMount () {
     if (!this.props.allProjects || !this.props.allProjects.length) {
-      this.props.projects.fetchAll()
+      this.props.dispatch(fetchAllProjects())
     }
   }
 
@@ -70,23 +75,13 @@ export class CreateIssueView extends React.Component {
     // that failed to validate
   }
 
-  _setProjectId (e) {
-    this.props.issues.selectProject({projectId: e.target.value})
+  _setProjectId (project) {
+    return this.setState({
+      selectedProjectKey: project.key
+    })
   }
 
   render () {
-    var projects = (<Icons.Loading/>)
-
-    if (!this.props.fetchingProjects && this.props.allProjects && this.props.allProjects.length > 0) {
-      var options = this.props.allProjects.map((project) =>
-        <option key={project.id} value={project.id}>{project.name}</option>)
-      projects = (
-        <select className='form-control' id='project' onChange={this._setProjectId}>
-          {options}
-        </select>
-      )
-    }
-
     return (
       <div className='container'>
         <div className='page-header'>
@@ -104,7 +99,14 @@ export class CreateIssueView extends React.Component {
           <div className='form-group'>
             <label htmlFor='project' className='col-sm-2 control-label'>Project</label>
             <div className='col-sm-10'>
-              {projects}
+              <Select id='project' placeholder='Select project...'
+                value={this.state.selectedProjectKey}
+                onChange={this._setProjectId}
+                options={this.props.allProjects}
+                labelKey="name"
+                valueKey="key"
+                isLoadingExternally={this.props.fetchingProjects}
+                required="true"/>
             </div>
           </div>
 
