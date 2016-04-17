@@ -3,8 +3,7 @@ import autoBind from 'react-autobind'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { actions as projectsActions, fetchAll as fetchAllProjects } from '../../redux/modules/ProjectsActions'
-import { actions as issuesActions, add as addIssue,
-  fetchByLocation as fetchIssueByLocation } from '../../redux/modules/IssuesActions'
+import { actions as issuesActions, add as addIssue } from '../../redux/modules/IssuesActions'
 import { push } from 'react-router-redux'
 import { Button } from 'react-bootstrap'
 import { Form, ValidatedInput } from 'react-bootstrap-validation'
@@ -56,10 +55,6 @@ export class CreateIssueView extends React.Component {
     const dispatch = this.props.dispatch
     const payload = Object.assign({}, values, {project_id: this.props.projectId || this.props.allProjects[0].id})
     dispatch(addIssue(payload))
-      .then(action => {
-        console.log('location', action)
-        return dispatch(fetchIssueByLocation(action.payload))
-      })
       .then(action => {
         console.log('issue', action)
         if (action.payload.length) {

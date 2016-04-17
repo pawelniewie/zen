@@ -7,12 +7,13 @@ export const selectProject = createAction(SELECT_PROJECT)
 
 export const ADD = 'issues/ADD'
 export const add = createAction(ADD, async issue => {
-  const np = await superagent
+  const resp = await superagent
     .post('/issues')
     .use(server)
+    .set('Prefer', 'return=representation')
     .send(issue)
     .end()
-  return np.headers.location
+  return resp.body
 }, (values) => (values))
 
 export const FETCH_BY_PROJECT = 'issues/FETCH_BY_PROJECT'
